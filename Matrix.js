@@ -90,9 +90,25 @@ class Matrix{
     return new Matrix(minorMatrix);
     }
 
-    determinant(){
-
+  determinant() {
+    const n = this.matrix.length;
+    let sum = 0;
+    if (n > 2) {
+      for (let i = 0; i < n; i++) {
+        sum +=
+          Math.pow(-1, i) *
+          this.matrix[0][i] *
+          this.getMinorOfElem(0, i).determinant();
+      }
+    } else {
+      return (
+        this.matrix[0][0] * this.matrix[1][1] -
+        this.matrix[0][1] * this.matrix[1][0]
+      );
     }
+
+    return sum;
+  }
 
     type(){
         return `Your matrix is ${this.n}x${this.m} type.`
