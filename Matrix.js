@@ -122,12 +122,22 @@ class Matrix{
     return new Matrix(scaledMatrix);
     }
 
-    print(){
-
+  add(B) {
+    let result = [];
+    if (B instanceof Matrix) {
+      if (this.m === B.m && this.n === B.n) {
+        for (let i = 0; i < this.n; i++) {
+          let row = [];
+          for (let j = 0; j < this.m; j++) {
+            row.push(this.matrix[i][j] + B.matrix[i][j]);
+          }
+          result.push(row);
+        }
+      } else {
+        throw Error(`You can not add ${this.type()} and ${B.type()} matrices`);
+      }
+    } else {
+      throw Error("Your input isn't Matrix");
     }
-
-}
-
-
-const A = new Matrix([[1, 0], [0, 1]]);
-
+    return new Matrix(result);
+  }
