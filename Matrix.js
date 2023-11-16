@@ -44,8 +44,18 @@ class Matrix{
 
     }
 
-    isEqualTo(){
+    isEqualTo(B){
+        if(this.n = B.n && this.m == B.m){
+            for (let i = 0; i < this.n; i++) {
+                for (let j = 0; j < this.m; j++) {
+                    if(this.matrix[i][j] !== B.matrix[i][j]) return false;
+                }                
+            }
 
+            return true;
+        }else{
+            return false;
+        }
     }
 
     transpose(){
