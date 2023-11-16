@@ -141,3 +141,4 @@ class Matrix{
     }
     return new Matrix(result);
   }
+    return `${this.n}x${this.m}`;
