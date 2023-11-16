@@ -87,7 +87,7 @@ class Matrix{
       minorMatrix.push(row);
     }
 
-    return minorMatrix;
+    return new Matrix(minorMatrix);
     }
 
     determinant(){
