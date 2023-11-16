@@ -47,6 +47,16 @@ class Matrix{
     }
 
     transpose(){
+        const transposedMatrix = Array(this.m).fill().map(()=>Array(this.n).fill());
+
+        for (let i = 0; i < this.n; i++) {
+            for (let j = 0; j < this.m; j++) {
+                transposedMatrix[j][i] = this.matrix[i][j];
+            }            
+        }
+
+        console.log(transposedMatrix)
+        return new Matrix(transposedMatrix);
 
     }
 
