@@ -110,8 +110,16 @@ class Matrix{
     return sum;
   }
 
-    type(){
-        return `Your matrix is ${this.n}x${this.m} type.`
+  scale(x) {
+    let scaledMatrix = [];
+    for (let i = 0; i < this.n; i++) {
+      let row = [];
+      for (let j = 0; j < this.m; j++) {
+        row.push(x * this.matrix[i][j]);
+      }
+      scaledMatrix.push(row);
+    }
+    return new Matrix(scaledMatrix);
     }
 
     print(){
