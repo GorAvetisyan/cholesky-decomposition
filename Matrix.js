@@ -141,4 +141,7 @@ class Matrix{
     }
     return new Matrix(result);
   }
+  subtract(B) {
+    return this.add(B.scale(-1));
+  }
     return `${this.n}x${this.m}`;
