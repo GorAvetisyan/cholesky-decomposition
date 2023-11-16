@@ -77,7 +77,7 @@ class Matrix{
     }
 
     type(){
-
+        return `Your matrix is ${this.n}x${this.m} type.`
     }
 
     print(){
