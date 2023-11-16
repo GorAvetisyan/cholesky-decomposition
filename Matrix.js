@@ -38,6 +38,8 @@ class Matrix{
         }
     }
 
+    isSquare(){ return this.m == this.n}
+
     isSymmetric(){
 
     }
