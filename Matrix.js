@@ -69,7 +69,25 @@ class Matrix{
 
         console.log(transposedMatrix)
         return new Matrix(transposedMatrix);
+  getMinorOfElem(elemRow, elemCol) {
+    const n = this.n;
+    const minorMatrix = [];
 
+    for (let i = 0; i < n; i++) {
+      const row = [];
+
+      if (i == elemRow) continue;
+
+      for (let j = 0; j < n; j++) {
+        if (j == elemCol) continue;
+
+        row.push(this.matrix[i][j]);
+      }
+
+      minorMatrix.push(row);
+    }
+
+    return minorMatrix;
     }
 
     determinant(){
