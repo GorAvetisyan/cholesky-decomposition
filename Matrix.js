@@ -41,7 +41,7 @@ class Matrix{
     isSquare(){ return this.m == this.n}
 
     isSymmetric(){
-
+        return this.isEqualTo(this.transpose());
     }
 
     isEqualTo(B){
