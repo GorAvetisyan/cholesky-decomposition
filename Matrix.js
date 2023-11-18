@@ -1,74 +1,79 @@
-class Matrix{
-    
-    // are n, m required for contructor ?
+class Matrix {
+  constructor(matrix) {
+    if (Array.isArray(matrix)) {
+      let n = matrix.length;
+      let m;
 
-    constructor(matrix){
-
-        if(Array.isArray(matrix)){
-
-            let n = matrix.length;
-            let m;
-
-            for (let i = 0; i < n; i++) {
-                if(Array.isArray(matrix[i])){
-                    if(m == undefined){
-                        m = matrix[i].length;
-                    }else{
-                        if(matrix[i].length == m){
-                            for (let j = 0; j < m; j++) {
-                                if(typeof matrix[i][j] !== 'number'){
-                                    throw Error(`Matrix elements must be numbers: matrix[${i+1}][${j+1}] is ${typeof matrix[i][j]}`);
-                                }
-                            }
-                        }else{
-                            throw Error(`${i+1}th row need to have ${m} elements`);
-                        }
-                    }
-                }else{
-                    throw Error(`${i+1}th row must be an array, got an ${typeof matrix[i]}`);
+      for (let i = 0; i < n; i++) {
+        if (Array.isArray(matrix[i])) {
+          if (m == undefined) {
+            m = matrix[i].length;
+          } else {
+            if (matrix[i].length == m) {
+              for (let j = 0; j < m; j++) {
+                if (typeof matrix[i][j] !== "number") {
+                  throw Error(
+                    `Matrix elements must be numbers: matrix[${i + 1}][${
+                      j + 1
+                    }] is ${typeof matrix[i][j]}`
+                  );
                 }
-    }
-
-            this.n = n;
-            this.m = m;
-            this.matrix = matrix;
-
-        }else{
-            throw Error(`Matrix must be an array, got a ${typeof matrix}`);
-        }
-    }
-
-    isSquare(){ return this.m == this.n}
-
-    isSymmetric(){
-        return this.isEqualTo(this.transpose());
-    }
-
-    isEqualTo(B){
-        if(this.n == B.n && this.m == B.m){
-            for (let i = 0; i < this.n; i++) {
-                for (let j = 0; j < this.m; j++) {
-                    if(this.matrix[i][j] !== B.matrix[i][j]) return false;
-                }                
+              }
+            } else {
+              throw Error(`${i + 1}th row need to have ${m} elements`);
             }
-
-            return true;
-        }else{
-            return false;
+          }
+        } else {
+          throw Error(
+            `${i + 1}th row must be an array, got an ${typeof matrix[i]}`
+          );
         }
+      }
+
+      this.n = n;
+      this.m = m;
+      this.matrix = matrix;
+    } else {
+      throw Error(`Matrix must be an array, got a ${typeof matrix}`);
+    }
+  }
+
+  isSquare() {
+    return this.m == this.n;
+  }
+
+  isSymmetric() {
+    return this.isEqualTo(this.transpose());
+  }
+
+  isEqualTo(B) {
+    if (this.n == B.n && this.m == B.m) {
+      for (let i = 0; i < this.n; i++) {
+        for (let j = 0; j < this.m; j++) {
+          if (this.matrix[i][j] !== B.matrix[i][j]) return false;
+        }
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  transpose() {
+    const transposedMatrix = Array(this.m)
+      .fill()
+      .map(() => Array(this.n).fill());
+
+    for (let i = 0; i < this.n; i++) {
+      for (let j = 0; j < this.m; j++) {
+        transposedMatrix[j][i] = this.matrix[i][j];
+      }
     }
 
-    transpose(){
-        const transposedMatrix = Array(this.m).fill().map(()=>Array(this.n).fill());
+    return new Matrix(transposedMatrix);
+  }
 
-        for (let i = 0; i < this.n; i++) {
-            for (let j = 0; j < this.m; j++) {
-                transposedMatrix[j][i] = this.matrix[i][j];
-            }            
-        }
-
-        console.log(transposedMatrix)
-        return new Matrix(transposedMatrix);
   getMinorOfElem(elemRow, elemCol) {
     const n = this.n;
     const minorMatrix = [];
@@ -88,7 +93,7 @@ class Matrix{
     }
 
     return new Matrix(minorMatrix);
-    }
+  }
 
   determinant() {
     const n = this.matrix.length;
@@ -120,7 +125,7 @@ class Matrix{
       scaledMatrix.push(row);
     }
     return new Matrix(scaledMatrix);
-    }
+  }
 
   add(B) {
     let result = [];
@@ -141,7 +146,12 @@ class Matrix{
     }
     return new Matrix(result);
   }
+
   subtract(B) {
     return this.add(B.scale(-1));
   }
+
+  type() {
     return `${this.n}x${this.m}`;
+  }
+}
