@@ -154,4 +154,14 @@ class Matrix {
   type() {
     return `${this.n}x${this.m}`;
   }
+
+  setElem(value, i, j) {
+    if (typeof value === "number" && !isNaN(value)) {
+      if (i <= this.n && j <= this.m) {
+        this.matrix[i - 1][j - 1] = value;
+      }
+    }
+  }
 }
+
+export default Matrix;

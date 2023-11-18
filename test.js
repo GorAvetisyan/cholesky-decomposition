@@ -1,5 +1,4 @@
-const Matrix = require("./Matrix.js");
-
+import Matrix from "./Matrix.js";
 const matrix1 = new Matrix([
   [0, 0, 2],
   [5, 9, 9],
@@ -42,4 +41,3 @@ const matrix6 = new Matrix([
   [3, 8, 9, 0, 8],
 ]);
 
-console.log(matrix1.determinant());
