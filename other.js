@@ -42,7 +42,36 @@ const {Matrix, Vector, Row} = require('./Matrix');
 //   [3, 8, 9, 0, 8],
 // ]);
 
-const A = new Vector(3, [1, 2, 3]);
-const B = new Row(3, [1, 2, 3]);
+// const A = new Vector(3, [1, 2, 3]);
+// const B = new Row(3, [1, 2, 3]);
 
-console.log(A, B);
+// console.log(A, B);
+
+
+const myU = new Matrix(6, 6, [
+    [2, 2, 2, 2, 2, 2],
+    [0, 2, 2, 2, 2, 2],
+    [0, 0, 2, 2, 2, 2],
+    [0, 0, 0, 2, 2, 2],
+    [0, 0, 0, 0, 2, 2],
+    [0, 0, 0, 0, 0, 2],
+]);
+
+const A = myU.transpose().multiply(myU);
+
+const U = A.findU();
+
+console.log(myU.isEqualTo(U));
+
+// Counting additions and multiplications
+// console.log(additions, multiplications);
+
+// Not a positive definite matrix
+
+const B = new Matrix(3, 3, [
+  [-4, 4, 8],
+  [4, -1, 16],
+  [8, 16, -1],
+]);
+
+console.log(B.findU()); // Infinities in result

@@ -224,7 +224,52 @@ class Matrix {
 
   validIndexes(i, j) {
     return isNatural(i) && i <= this.n && isNatural(j) && j <= this.m;
-  }
+	}
+	
+	findU() {
+			if (this.isSymmetric()) {
+					let additions = 0;
+					let multiplications = 0;
+
+					const U = new Matrix(this.n, this.m);
+
+					for (let i = 0; i < this.n; i++) {
+							let summ = 0;
+
+							for (let k = 0; k < i; k++) {
+									summ += U.matrix[k][i] ** 2;
+									additions++;
+									multiplications++;
+							}
+
+							const elem = Math.sqrt(this.matrix[i][i] - summ);
+							additions++;
+
+							U.setElem(elem, i + 1, i + 1);
+
+							for (let j = i + 1; j < this.m; j++) {
+									let summ = 0;
+
+									for (let k = 0; k < i; k++) {
+											summ += U.matrix[k][i] * U.matrix[k][j];
+											additions++;
+											multiplications++;
+									}
+
+									const elem = (this.matrix[i][j] - summ) / U.matrix[i][i];
+									additions++;
+									multiplications++;
+
+									U.setElem(elem, i + 1, j + 1);
+							}
+					}
+
+					return U;
+			} else {
+					throw Error("This works only for symmetric matrices");
+			}
+	}
+
 }
 
 class Vector extends Matrix{
