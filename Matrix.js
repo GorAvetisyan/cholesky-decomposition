@@ -177,6 +177,31 @@ class Matrix {
       }
     }
   }
+
+  multiply(B) {
+    if (B instanceof Matrix) {
+      if (this.m === B.n) {
+        let Result = new Matrix(this.n, B.m);
+        let C = new Matrix(B.m, B.n, B.transpose().matrix);
+        for (let i = 0; i < this.n; i++) {
+          for (let j = 0; j < B.m; j++) {
+            let currentElem = 0;
+            for (let k = 0; k < this.m; k++) {
+              currentElem += this.matrix[i][k] * C.matrix[j][k];
+            }
+            Result.setElem(currentElem, i + 1, j + 1);
+          }
+        }
+        return Result;
+      } else {
+        throw Error(
+          `You can't multiply ${this.type()} matrix with ${B.type()} matrix `
+        );
+      }
+    } else {
+      throw Error("Your input isn't a matrix");
+    }
+  }
 }
 
 class Vector extends Matrix{
