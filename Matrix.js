@@ -77,17 +77,16 @@ class Matrix {
   }
 
   transpose() {
-    const transposedMatrix = Array(this.m)
-      .fill()
-      .map(() => Array(this.n).fill());
+    const transposedMatrix = new Matrix(this.m, this.n);
 
     for (let i = 0; i < this.n; i++) {
       for (let j = 0; j < this.m; j++) {
-        transposedMatrix[j][i] = this.matrix[i][j];
+        // j + 1 and i + 1 see setElem method
+        transposedMatrix.setElem(this.matrix[i][j], j + 1, i + 1);
       }
     }
 
-    return new Matrix(transposedMatrix);
+    return transposedMatrix;
   }
 
   getMinorOfElem(elemRow, elemCol) {
