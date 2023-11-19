@@ -111,23 +111,31 @@ class Matrix {
   }
 
   determinant() {
-    const n = this.matrix.length;
-    let sum = 0;
-    if (n > 2) {
-      for (let i = 0; i < n; i++) {
-        sum +=
-          Math.pow(-1, i) *
-          this.matrix[0][i] *
-          this.getMinorOfElem(0, i).determinant();
+    if (this.isSquare()) {
+      if (this.n != 1) {
+        let sum = 0;
+        if (this.n > 2) {
+          for (let i = 0; i < this.n; i++) {
+            sum +=
+              Math.pow(-1, i) *
+              this.matrix[0][i] *
+              this.getMinorOfElem(1, i + 1).determinant();
+          }
+        } else {
+          return (
+            this.matrix[0][0] * this.matrix[1][1] -
+            this.matrix[0][1] * this.matrix[1][0]
+          );
+        }
+    
+        return sum;
+      } else {
+        return this.matrix[0][0];
       }
     } else {
-      return (
-        this.matrix[0][0] * this.matrix[1][1] -
-        this.matrix[0][1] * this.matrix[1][0]
-      );
+      throw Error('This works only for square matrices');
     }
 
-    return sum;
   }
 
   scale(x) {
