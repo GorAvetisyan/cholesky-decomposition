@@ -180,4 +180,21 @@ class Matrix {
   }
 }
 
-module.exports = Matrix;
+class Vector extends Matrix{
+  constructor(n, array) {
+    const vector = [];
+    array.forEach(item => vector.push([item]));
+    super(n, 1, vector);
+    
+  }
+}
+
+class Row extends Matrix{
+  constructor(m, array) {
+    
+    super(1, m, [array]);
+    
+  }
+}
+
+module.exports = {Matrix, Vector, Row};
