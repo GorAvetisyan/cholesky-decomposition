@@ -90,16 +90,16 @@ class Matrix {
   }
 
   getMinorOfElem(elemRow, elemCol) {
-    const n = this.n;
+
     const minorMatrix = [];
 
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < this.n; i++) {
       const row = [];
 
-      if (i == elemRow) continue;
+      if (i == elemRow - 1) continue;
 
-      for (let j = 0; j < n; j++) {
-        if (j == elemCol) continue;
+      for (let j = 0; j < this.m; j++) {
+        if (j == elemCol - 1) continue;
 
         row.push(this.matrix[i][j]);
       }
@@ -107,7 +107,7 @@ class Matrix {
       minorMatrix.push(row);
     }
 
-    return new Matrix(minorMatrix);
+    return new Matrix(this.n - 1, this.m - 1, minorMatrix);
   }
 
   determinant() {
