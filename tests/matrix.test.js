@@ -227,6 +227,18 @@ describe("Matrix getMinorOfElem method", () => {
 
     });
 
+    it('error because of invalid indexes', () => {
+        
+        const matrix = new Matrix(3, 3, [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+        ]);
+
+        expect(() => matrix.getMinorOfElem(4, 2)).toThrow("Invalid indexes");
+
+    });
+
     it('should get the minor matrix of an element in a rectangular matrix', () => {
         const matrix = new Matrix(3, 4, [
             [1, 2, 3, 4],
@@ -305,5 +317,18 @@ describe('Matrix determinant method', () => {
     };
 
     expect(calculateDeterminant).toThrowError('This works only for square matrices');
+  });
+});
+
+describe('Matrix setElem method', () => {
+ it('throw error on invalid indexes', () => {
+    
+    const matrix = new Matrix(3, 3, [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+    ]);
+    
+    expect(() => matrix.setElem(7, 4, 5)).toThrowError('Invalid indexes');
   });
 });

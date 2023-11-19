@@ -91,23 +91,30 @@ class Matrix {
 
   getMinorOfElem(elemRow, elemCol) {
 
-    const minorMatrix = [];
+    if (this.validIndexes(elemRow, elemCol)) {
 
-    for (let i = 0; i < this.n; i++) {
-      const row = [];
-
-      if (i == elemRow - 1) continue;
-
-      for (let j = 0; j < this.m; j++) {
-        if (j == elemCol - 1) continue;
-
-        row.push(this.matrix[i][j]);
+      const minorMatrix = [];
+  
+      for (let i = 0; i < this.n; i++) {
+        const row = [];
+  
+        if (i == elemRow - 1) continue;
+  
+        for (let j = 0; j < this.m; j++) {
+          if (j == elemCol - 1) continue;
+  
+          row.push(this.matrix[i][j]);
+        }
+  
+        minorMatrix.push(row);
       }
+  
+      return new Matrix(this.n - 1, this.m - 1, minorMatrix);
 
-      minorMatrix.push(row);
+    } else {
+      throw Error('Invalid indexes');
     }
 
-    return new Matrix(this.n - 1, this.m - 1, minorMatrix);
   }
 
   determinant() {
@@ -179,10 +186,14 @@ class Matrix {
   }
 
   setElem(value, i, j) {
-    if (typeof value === "number" && !isNaN(value)) {
-      if (i <= this.n && j <= this.m) {
-        this.matrix[i - 1][j - 1] = value;
+    if (this.validIndexes(i, j)) {
+      if (typeof value === "number" && !isNaN(value)) {
+        if (i <= this.n && j <= this.m) {
+          this.matrix[i - 1][j - 1] = value;
+        }
       }
+    } else {
+      throw Error('Invalid indexes');
     }
   }
 
@@ -209,6 +220,10 @@ class Matrix {
     } else {
       throw Error("Your input isn't a matrix");
     }
+  }
+
+  validIndexes(i, j) {
+    return isNatural(i) && i <= this.n && isNatural(j) && j <= this.m;
   }
 }
 
