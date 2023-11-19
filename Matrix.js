@@ -1,44 +1,38 @@
-const { isNatural } = require('./helpers');
+const { isNatural } = require("./helpers");
 
 class Matrix {
   constructor(n, m, array) {
-
     let matrix = [];
 
     if (isNatural(n) && isNatural(m)) {
-    
       this.n = n;
       this.m = m;
 
-      if (typeof array !== 'undefined') {
+      if (typeof array !== "undefined") {
         if (Array.isArray(array) && array.length === n) {
           for (let i = 0; i < n; i++) {
-            
             const row = [];
 
             if (Array.isArray(array[i]) && array[i].length === m) {
               for (let j = 0; j < m; j++) {
-
                 const elem = array[i][j];
-                
-                if (typeof elem === 'number' && !isNaN(elem)) {
-                  
-                  row.push(elem);
 
+                if (typeof elem === "number" && !isNaN(elem)) {
+                  row.push(elem);
                 } else {
-                  throw Error(`matrix[${i + 1}][${j + 1}] must be a number got ${typeof elem}`);
+                  throw Error(
+                    `matrix[${i + 1}][${
+                      j + 1
+                    }] must be a number got ${typeof elem}`,
+                  );
                 }
               }
-              
             } else {
-              throw Error(`${i+1}th row must be an array with ${m} elements`);
-            
+              throw Error(`${i + 1}th row must be an array with ${m} elements`);
             }
 
             matrix.push(row);
-
           }
-
         } else {
           throw Error(`input must be an array with ${n} elements`);
         }
@@ -48,7 +42,7 @@ class Matrix {
           .map(() => Array(m).fill(0));
       }
     } else {
-      throw Error('n and m must be natural numbers')
+      throw Error("n and m must be natural numbers");
     }
 
     this.matrix = matrix;
@@ -90,31 +84,27 @@ class Matrix {
   }
 
   getMinorOfElem(elemRow, elemCol) {
-
     if (this.validIndexes(elemRow, elemCol)) {
-
       const minorMatrix = [];
-  
+
       for (let i = 0; i < this.n; i++) {
         const row = [];
-  
+
         if (i == elemRow - 1) continue;
-  
+
         for (let j = 0; j < this.m; j++) {
           if (j == elemCol - 1) continue;
-  
+
           row.push(this.matrix[i][j]);
         }
-  
+
         minorMatrix.push(row);
       }
-  
+
       return new Matrix(this.n - 1, this.m - 1, minorMatrix);
-
     } else {
-      throw Error('Invalid indexes');
+      throw Error("Invalid indexes");
     }
-
   }
 
   determinant() {
@@ -134,19 +124,18 @@ class Matrix {
             this.matrix[0][1] * this.matrix[1][0]
           );
         }
-    
+
         return sum;
       } else {
         return this.matrix[0][0];
       }
     } else {
-      throw Error('This works only for square matrices');
+      throw Error("This works only for square matrices");
     }
-
   }
 
   scale(x) {
-    if (typeof x === 'number' && !isNaN(x)) {
+    if (typeof x === "number" && !isNaN(x)) {
       const scaledMatrix = new Matrix(this.n, this.m);
       for (let i = 0; i < this.n; i++) {
         for (let j = 0; j < this.m; j++) {
@@ -155,7 +144,7 @@ class Matrix {
       }
       return scaledMatrix;
     } else {
-      throw Error('Your input is not a number');
+      throw Error("Your input is not a number");
     }
   }
 
@@ -165,7 +154,11 @@ class Matrix {
       if (this.m === B.m && this.n === B.n) {
         for (let i = 0; i < this.n; i++) {
           for (let j = 0; j < this.m; j++) {
-            resultMatrix.setElem(this.matrix[i][j] + B.matrix[i][j], i + 1, j + 1)
+            resultMatrix.setElem(
+              this.matrix[i][j] + B.matrix[i][j],
+              i + 1,
+              j + 1,
+            );
           }
         }
       } else {
@@ -193,7 +186,7 @@ class Matrix {
         }
       }
     } else {
-      throw Error('Invalid indexes');
+      throw Error("Invalid indexes");
     }
   }
 
@@ -214,7 +207,7 @@ class Matrix {
         return Result;
       } else {
         throw Error(
-          `You can't multiply ${this.type()} matrix with ${B.type()} matrix `
+          `You can't multiply ${this.type()} matrix with ${B.type()} matrix `,
         );
       }
     } else {
@@ -224,69 +217,65 @@ class Matrix {
 
   validIndexes(i, j) {
     return isNatural(i) && i <= this.n && isNatural(j) && j <= this.m;
-	}
-	
-	findU() {
-			if (this.isSymmetric()) {
-					let additions = 0;
-					let multiplications = 0;
+  }
 
-					const U = new Matrix(this.n, this.m);
+  findU() {
+    if (this.isSymmetric()) {
+      let additions = 0;
+      let multiplications = 0;
 
-					for (let i = 0; i < this.n; i++) {
-							let summ = 0;
+      const U = new Matrix(this.n, this.m);
 
-							for (let k = 0; k < i; k++) {
-									summ += U.matrix[k][i] ** 2;
-									additions++;
-									multiplications++;
-							}
+      for (let i = 0; i < this.n; i++) {
+        let summ = 0;
 
-							const elem = Math.sqrt(this.matrix[i][i] - summ);
-							additions++;
+        for (let k = 0; k < i; k++) {
+          summ += U.matrix[k][i] ** 2;
+          additions++;
+          multiplications++;
+        }
 
-							U.setElem(elem, i + 1, i + 1);
+        const elem = Math.sqrt(this.matrix[i][i] - summ);
+        additions++;
 
-							for (let j = i + 1; j < this.m; j++) {
-									let summ = 0;
+        U.setElem(elem, i + 1, i + 1);
 
-									for (let k = 0; k < i; k++) {
-											summ += U.matrix[k][i] * U.matrix[k][j];
-											additions++;
-											multiplications++;
-									}
+        for (let j = i + 1; j < this.m; j++) {
+          let summ = 0;
 
-									const elem = (this.matrix[i][j] - summ) / U.matrix[i][i];
-									additions++;
-									multiplications++;
+          for (let k = 0; k < i; k++) {
+            summ += U.matrix[k][i] * U.matrix[k][j];
+            additions++;
+            multiplications++;
+          }
 
-									U.setElem(elem, i + 1, j + 1);
-							}
-					}
+          const elem = (this.matrix[i][j] - summ) / U.matrix[i][i];
+          additions++;
+          multiplications++;
 
-					return U;
-			} else {
-					throw Error("This works only for symmetric matrices");
-			}
-	}
+          U.setElem(elem, i + 1, j + 1);
+        }
+      }
 
+      return U;
+    } else {
+      throw Error("This works only for symmetric matrices");
+    }
+  }
 }
 
-class Vector extends Matrix{
+class Vector extends Matrix {
   constructor(n, array) {
     const vector = [];
     array.forEach(item => vector.push([item]));
     super(n, 1, vector);
-    
   }
 }
 
-class Row extends Matrix{
+class Row extends Matrix {
   constructor(m, array) {
-    
     super(1, m, [array]);
-    
   }
 }
 
-module.exports = {Matrix, Vector, Row};
+module.exports = { Matrix, Vector, Row };

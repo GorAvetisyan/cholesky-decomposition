@@ -1,4 +1,4 @@
-const {Matrix, Vector, Row} = require('./Matrix');
+const { Matrix, Vector, Row } = require("./Matrix");
 
 // const matrix1 = new Matrix([
 //   [0, 0, 2],
@@ -47,14 +47,13 @@ const {Matrix, Vector, Row} = require('./Matrix');
 
 // console.log(A, B);
 
-
 const myU = new Matrix(6, 6, [
-    [2, 2, 2, 2, 2, 2],
-    [0, 2, 2, 2, 2, 2],
-    [0, 0, 2, 2, 2, 2],
-    [0, 0, 0, 2, 2, 2],
-    [0, 0, 0, 0, 2, 2],
-    [0, 0, 0, 0, 0, 2],
+  [2, 2, 2, 2, 2, 2],
+  [0, 2, 2, 2, 2, 2],
+  [0, 0, 2, 2, 2, 2],
+  [0, 0, 0, 2, 2, 2],
+  [0, 0, 0, 0, 2, 2],
+  [0, 0, 0, 0, 0, 2],
 ]);
 
 const A = myU.transpose().multiply(myU);
