@@ -1,4 +1,5 @@
-import Matrix from "./Matrix.js";
+const Matrix = require('./Matrix');
+
 const matrix1 = new Matrix([
   [0, 0, 2],
   [5, 9, 9],
