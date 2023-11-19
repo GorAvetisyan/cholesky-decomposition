@@ -1,41 +1,57 @@
+const { isNatural } = require('./helpers');
+
 class Matrix {
-  constructor(matrix) {
-    if (Array.isArray(matrix)) {
-      let n = matrix.length;
-      let m;
+  constructor(n, m, array) {
 
-      for (let i = 0; i < n; i++) {
-        if (Array.isArray(matrix[i])) {
-          if (m == undefined) {
-            m = matrix[i].length;
-          } else {
-            if (matrix[i].length == m) {
-              for (let j = 0; j < m; j++) {
-                if (typeof matrix[i][j] !== "number") {
-                  throw Error(
-                    `Matrix elements must be numbers: matrix[${i + 1}][${
-                      j + 1
-                    }] is ${typeof matrix[i][j]}`
-                  );
-                }
-              }
-            } else {
-              throw Error(`${i + 1}th row need to have ${m} elements`);
-            }
-          }
-        } else {
-          throw Error(
-            `${i + 1}th row must be an array, got an ${typeof matrix[i]}`
-          );
-        }
-      }
+    let matrix = [];
 
+    if (isNatural(n) && isNatural(m)) {
+    
       this.n = n;
       this.m = m;
-      this.matrix = matrix;
+
+      if (typeof array !== 'undefined') {
+        if (Array.isArray(array) && array.length === n) {
+          for (let i = 0; i < n; i++) {
+            
+            const row = [];
+
+            if (Array.isArray(array[i]) && array[i].length === m) {
+              for (let j = 0; j < m; j++) {
+
+                const elem = array[i][j];
+                
+                if (typeof elem === 'number' && !isNaN(elem)) {
+                  
+                  row.push(elem);
+
+                } else {
+                  throw Error(`matrix[${i + 1}][${j + 1}] must be a number got ${typeof elem}`);
+                }
+              }
+              
+            } else {
+              throw Error(`${i+1}th row must be an array with ${m} elements`);
+            
+            }
+
+            matrix.push(row);
+
+          }
+
+        } else {
+          throw Error(`input must be an array with ${n} elements`);
+        }
+      } else {
+        matrix = Array(n)
+          .fill()
+          .map(() => Array(m).fill(0));
+      }
     } else {
-      throw Error(`Matrix must be an array, got a ${typeof matrix}`);
+      throw Error('n and m must be natural numbers')
     }
+
+    this.matrix = matrix;
   }
 
   isSquare() {
@@ -164,4 +180,4 @@ class Matrix {
   }
 }
 
-export default Matrix;
+module.exports = Matrix;
