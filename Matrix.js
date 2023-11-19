@@ -146,27 +146,27 @@ class Matrix {
   }
 
   scale(x) {
-    let scaledMatrix = [];
-    for (let i = 0; i < this.n; i++) {
-      let row = [];
-      for (let j = 0; j < this.m; j++) {
-        row.push(x * this.matrix[i][j]);
+    if (typeof x === 'number' && !isNaN(x)) {
+      const scaledMatrix = new Matrix(this.n, this.m);
+      for (let i = 0; i < this.n; i++) {
+        for (let j = 0; j < this.m; j++) {
+          scaledMatrix.setElem(x * this.matrix[i][j], i + 1, j + 1);
+        }
       }
-      scaledMatrix.push(row);
+      return scaledMatrix;
+    } else {
+      throw Error('Your input is not a number');
     }
-    return new Matrix(scaledMatrix);
   }
 
   add(B) {
-    let result = [];
+    const resultMatrix = new Matrix(this.n, this.m);
     if (B instanceof Matrix) {
       if (this.m === B.m && this.n === B.n) {
         for (let i = 0; i < this.n; i++) {
-          let row = [];
           for (let j = 0; j < this.m; j++) {
-            row.push(this.matrix[i][j] + B.matrix[i][j]);
+            resultMatrix.setElem(this.matrix[i][j] + B.matrix[i][j], i + 1, j + 1)
           }
-          result.push(row);
         }
       } else {
         throw Error(`You can not add ${this.type()} and ${B.type()} matrices`);
@@ -174,7 +174,7 @@ class Matrix {
     } else {
       throw Error("Your input isn't Matrix");
     }
-    return new Matrix(result);
+    return resultMatrix;
   }
 
   subtract(B) {
