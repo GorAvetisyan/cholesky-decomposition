@@ -312,4 +312,16 @@ class Row extends Matrix {
   }
 }
 
-module.exports = { Matrix, Vector, Row };
+class PermutationMatrix extends Matrix {
+  constructor(n, [a, b]) {
+    const I = IdentityMatrix(n);
+
+    const tempRow = [...I.matrix[a - 1]];
+    I.matrix[a - 1] = [...I.matrix[b - 1]];
+    I.matrix[b - 1] = tempRow;
+
+    super(n, n, I.matrix);
+  }
+}
+
+module.exports = { Matrix, Vector, Row, PermutationMatrix };

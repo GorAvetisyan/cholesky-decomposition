@@ -1,4 +1,4 @@
-const { Matrix, Vector, Row } = require("./Matrix");
+const { Matrix, Vector, Row, PermutationMatrix } = require("./Matrix");
 
 // const matrix1 = new Matrix([
 //   [0, 0, 2],
@@ -72,5 +72,10 @@ const B = new Matrix(3, 3, [
   [4, -1, 16],
   [8, 16, -1],
 ]);
+
+const p1 = new PermutationMatrix(3, [1, 3]);
+
+console.log(p1.multiply(B));
+console.log(B.multiply(p1));
 
 console.log(B.findU()); // Infinities in result
