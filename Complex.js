@@ -32,14 +32,22 @@ class Complex {
     }
   }
 
-  substract(y) {
+  subtract(y) {
     return this.add(y.multiply(-1));
   }
 
   mod() {
     return Math.sqrt(this.a ** 2 + this.b ** 2);
   }
-    
+
+  argument() {
+    let result = Math.atan(this.b / this.a);
+
+    if (this.a < 0 && this.b > 0) result += Math.PI;
+    if (this.a < 0 && this.b < 0) result -= Math.PI;
+
+    return result;
+  }
 }
 
-
+module.exports = { Complex };
