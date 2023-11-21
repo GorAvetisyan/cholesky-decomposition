@@ -286,6 +286,18 @@ class Matrix {
   }
 }
 
+const IdentityMatrix = n => {
+  if (isNatural(n)) {
+    const I = new Matrix(n, n);
+    for (let i = 0; i < n; i++) {
+      I.setElem(1, i + 1, i + 1);
+    }
+    return I;
+  } else {
+    throw Error("Input must be a Natural number");
+  }
+};
+
 class Vector extends Matrix {
   constructor(n, array) {
     const vector = [];
