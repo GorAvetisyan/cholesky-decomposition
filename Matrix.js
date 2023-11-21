@@ -284,6 +284,20 @@ class Matrix {
       return false;
     }
   }
+
+  isUpperTriangular() {
+    if (!this.isSquare()) return false;
+
+    for (let i = 0; i < this.n; i++) {
+      for (let j = 0; j < this.n; j++) {
+        if (j < i && this.matrix[i][j] !== 0) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
 }
 
 const IdentityMatrix = n => {
