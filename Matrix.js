@@ -262,6 +262,28 @@ class Matrix {
       throw Error("This works only for symmetric matrices");
     }
   }
+
+  isStrictDiagonalDominant() {
+    if (this.isSquare()) {
+      for (let i = 0; i < this.n; i++) {
+        let summ = 0;
+
+        for (let j = 0; j < this.m; j++) {
+          if (i != j) {
+            summ += Math.abs(this.matrix[i][j]);
+          }
+        }
+
+        if (Math.abs(this.matrix[i][i]) <= summ) {
+          return false;
+        }
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 class Vector extends Matrix {
