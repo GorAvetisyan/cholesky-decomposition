@@ -1,4 +1,4 @@
-const { isNatural } = require("./helpers");
+const { isNatural, isNumber } = require("./helpers");
 
 class Matrix {
   constructor(n, m, array) {
@@ -17,7 +17,7 @@ class Matrix {
               for (let j = 0; j < m; j++) {
                 const elem = array[i][j];
 
-                if (typeof elem === "number" && !isNaN(elem)) {
+                if (isNumber(elem)) {
                   row.push(elem);
                 } else {
                   throw Error(
@@ -135,7 +135,7 @@ class Matrix {
   }
 
   scale(x) {
-    if (typeof x === "number" && !isNaN(x)) {
+    if (isNumber(x)) {
       const scaledMatrix = new Matrix(this.n, this.m);
       for (let i = 0; i < this.n; i++) {
         for (let j = 0; j < this.m; j++) {
@@ -180,7 +180,7 @@ class Matrix {
 
   setElem(value, i, j) {
     if (this.validIndexes(i, j)) {
-      if (typeof value === "number" && !isNaN(value)) {
+      if (isNumber(value)) {
         if (i <= this.n && j <= this.m) {
           this.matrix[i - 1][j - 1] = value;
         }
