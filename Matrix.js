@@ -285,6 +285,44 @@ class Matrix {
     }
   }
 
+  solveUpperTriangular(B) {
+    if (this.isUpperTriangular()) {
+      if (B instanceof Vector) {
+        const X = new Vector(this.n);
+
+        // x[n - 1] = b[n - 1] / a[n - 1][n - 1];
+
+        // x[n - 2] = (b[n - 2] - a[n - 1][n] * x[n]) / a[n - 2][n - 2];
+
+        // x[n - 3] = (b[n - 3] - a[n - 2][n] * x[n] - a[n - 2][n - 1] * x[n - 1]) / a[n-3][n-3];
+
+        // x[o] = (b[o] - a[0][n] * x[n] - a[0][n-1] * x[n-1] - ... - a[0][1] * x[1]) / a[0][0]
+
+        const { n } = this;
+
+        for (let i = 1; i <= n; i++) {
+          let summ = 0;
+          for (let j = 1; j <= i; j++) {
+            summ += this.matrix[n - i][n - j] * X.matrix[n - j];
+          }
+
+          if (this.matrix[n - i][n - i] != 0) {
+            const elem = (B.matrix[n - i] - summ) / this.matrix[n - i][n - i];
+            X.setElem(elem, n - i + 1);
+          } else {
+            throw Error(`Matrix[${n - i + 1}][${n - i + 1}] is Zero`);
+          }
+        }
+
+        return X;
+      } else {
+        throw Error(`B must be ${this.n} size Vector`);
+      }
+    } else {
+      throw Error("Matrix is not upper triangular");
+    }
+  }
+
   isUpperTriangular() {
     if (!this.isSquare()) return false;
 
@@ -315,8 +353,17 @@ const IdentityMatrix = n => {
 class Vector extends Matrix {
   constructor(n, array) {
     const vector = [];
-    array.forEach(item => vector.push([item]));
-    super(n, 1, vector);
+
+    if (array) {
+      array.forEach(item => vector.push([item]));
+      super(n, 1, vector);
+    } else {
+      super(n, 1);
+    }
+  }
+
+  setElem(value, i) {
+    super.setElem(value, i, 1);
   }
 }
 
