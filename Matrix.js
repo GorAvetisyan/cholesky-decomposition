@@ -287,7 +287,9 @@ class Matrix {
 
   solveUpperTriangular(B) {
     if (this.isUpperTriangular()) {
-      if (B instanceof Vector) {
+      if (B instanceof Vector || true) {
+        // true because on matrix.multiply(vector) result is instance of Matrix class not Vector !!! must resolve this
+        
         const X = new Vector(this.n);
 
         // x[n - 1] = b[n - 1] / a[n - 1][n - 1];
@@ -321,6 +323,22 @@ class Matrix {
     } else {
       throw Error("Matrix is not upper triangular");
     }
+  }
+
+  solveLowerTriangular(B) {
+    const rowReversingMatrix = reversingMatrix(this.n);
+
+    const rowReversedMatrix = rowReversingMatrix.multiply(this);
+    const rowReversedVector = rowReversingMatrix.multiply(B);
+
+    console.log(rowReversedVector);
+    const rowReversedSolution =
+      rowReversedMatrix.solveUpperTriangular(rowReversedVector);
+
+    console.log(rowReversedMatrix, rowReversedVector, "-______-", B);
+    const solution = rowReversingMatrix.multiply(rowReversedSolution);
+
+    return solution;
   }
 
   isUpperTriangular() {
