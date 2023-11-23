@@ -350,6 +350,24 @@ const IdentityMatrix = n => {
   }
 };
 
+const reversingMatrix = n => {
+  if (isNatural(n)) {
+    const result = new Matrix(n, n);
+
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        if (i + j == n - 1) {
+          result.setElem(1, i + 1, j + 1);
+        }
+      }
+    }
+
+    return result;
+  } else {
+    throw Error("Input must be a Natural number");
+  }
+};
+
 class Vector extends Matrix {
   constructor(n, array) {
     const vector = [];
