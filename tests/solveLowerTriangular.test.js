@@ -3,8 +3,8 @@ const { Matrix, Vector } = require("../Matrix");
 describe("Matrix solveLowerTriangular method with Vector", () => {
   it("should solve a simple 2x2 upper triangular system with vectors", () => {
     const matrix = new Matrix(2, 2, [
-      [0, 4],
-      [2, 3],
+      [4, 0],
+      [3, 2],
     ]);
 
     const vector = new Vector(2, [16, 8]);
@@ -16,9 +16,9 @@ describe("Matrix solveLowerTriangular method with Vector", () => {
 
   it("should solve a 3x3 upper triangular system with vectors", () => {
     const matrix = new Matrix(3, 3, [
-      [0, 0, 3],
-      [0, 4, 5],
-      [2, 3, 1],
+      [3, 0, 0],
+      [5, 4, 0],
+      [1, 3, 2],
     ]);
 
     const vector = new Vector(3, [9, 16, 8]);
@@ -30,9 +30,9 @@ describe("Matrix solveLowerTriangular method with Vector", () => {
 
   it("should throw error zero on diagonal", () => {
     const matrix = new Matrix(3, 3, [
-      [0, 0, 5],
-      [0, 0, 3],
-      [2, 3, 1],
+      [3, 0, 0],
+      [5, 0, 0],
+      [1, 3, 2],
     ]);
 
     const vector = new Vector(3, [8, 16, 9]);

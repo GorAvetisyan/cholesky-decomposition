@@ -326,17 +326,17 @@ class Matrix {
   }
 
   solveLowerTriangular(B) {
-    const rowReversingMatrix = reversingMatrix(this.n);
+    const rM = reversingMatrix(this.n);
 
-    const rowReversedMatrix = rowReversingMatrix.multiply(this);
-    const rowReversedVector = rowReversingMatrix.multiply(B);
+    const rowReversedMatrix = rM.multiply(this);
+    const colReversedMatrix = rowReversedMatrix.multiply(rM);
 
-    console.log(rowReversedVector);
+    const rowReversedVector = rM.multiply(B);
+
     const rowReversedSolution =
-      rowReversedMatrix.solveUpperTriangular(rowReversedVector);
+      colReversedMatrix.solveUpperTriangular(rowReversedVector);
 
-    console.log(rowReversedMatrix, rowReversedVector, "-______-", B);
-    const solution = rowReversingMatrix.multiply(rowReversedSolution);
+    const solution = rM.multiply(rowReversedSolution);
 
     return solution;
   }
