@@ -364,6 +364,24 @@ class Matrix {
     const x = U.solveUpperTriangular(y);
     return x;
   }
+  // Describe later))
+  setMatrix(matrix, p = 0, q = 0) {
+    // TODO validIndexes, setElem  : in this methods we use indexing staring from 1, this bring confusion every time.
+
+    // if (this.validIndexes(p, q)) {
+    if (p + matrix.n <= this.n && q + matrix.m <= this.m) {
+      for (let i = 0; i < matrix.n; i++) {
+        for (let j = 0; j < matrix.m; j++) {
+          this.setElem(matrix.matrix[i][j], p + i + 1, q + j + 1);
+        }
+      }
+    } else {
+      throw Error("Matrix Is not fitting");
+    }
+    // } else {
+    //   throw Error("Not valid indexes");
+    // }
+  }
 }
 
 const IdentityMatrix = n => {
