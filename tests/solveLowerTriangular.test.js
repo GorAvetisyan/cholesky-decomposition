@@ -10,7 +10,6 @@ describe("Matrix solveLowerTriangular method with Vector", () => {
     const vector = new Vector(2, [16, 8]);
     const solution = matrix.solveLowerTriangular(vector);
 
-    console.log(solution);
     expect(solution.matrix).toEqual([[4], [-2]]);
   });
 
@@ -24,7 +23,6 @@ describe("Matrix solveLowerTriangular method with Vector", () => {
     const vector = new Vector(3, [9, 16, 8]);
     const solution = matrix.solveLowerTriangular(vector);
 
-    console.log(solution);
     expect(solution.matrix).toEqual([[3], [0.25], [2.125]]);
   });
 

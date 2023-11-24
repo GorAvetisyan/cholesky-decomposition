@@ -12,7 +12,6 @@ describe("Matrix solveUpperTriangular method with Vector", () => {
     const solution = matrix.solveUpperTriangular(vector);
 
     expect(solution).toBeInstanceOf(Vector);
-    console.log(solution);
     expect(solution.matrix).toEqual([[-2], [4]]);
   });
 
@@ -27,7 +26,6 @@ describe("Matrix solveUpperTriangular method with Vector", () => {
     const solution = matrix.solveUpperTriangular(vector);
 
     expect(solution).toBeInstanceOf(Vector);
-    console.log(solution);
     expect(solution.matrix).toEqual([[2.125], [0.25], [3]]);
   });
 
