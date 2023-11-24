@@ -1,0 +1,47 @@
+.matrix_input {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 20px;
+  width: fit-content;
+  margin-right: 20px;
+}
+
+.matrix_input h3 {
+  margin-top: 0;
+}
+
+.matrix {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  margin: 5px;
+}
+.cell input {
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+}
+
+.size_inputs {
+  display: flex;
+}
+
+.size_inputs div {
+  display: flex;
+  margin: 5px;
+}
+
+.size_inputs input {
+  width: 50px;
+}
+
+.size_inputs label {
+  margin-right: 10px;
+}
