@@ -354,6 +354,16 @@ class Matrix {
 
     return true;
   }
+
+  // Cholesky decomposition
+
+  solveByCD(B) {
+    const U = this.findU();
+    const Ut = U.transpose();
+    const y = Ut.solveLowerTriangular(B);
+    const x = U.solveUpperTriangular(y);
+    return x;
+  }
 }
 
 const IdentityMatrix = n => {
