@@ -367,20 +367,13 @@ class Matrix {
   // Describe later))
   setMatrix(matrix, p = 0, q = 0) {
     // TODO validIndexes, setElem  : in this methods we use indexing staring from 1, this bring confusion every time.
+    // TODO add validation here
 
-    // if (this.validIndexes(p, q)) {
-    if (p + matrix.n <= this.n && q + matrix.m <= this.m) {
-      for (let i = 0; i < matrix.n; i++) {
-        for (let j = 0; j < matrix.m; j++) {
-          this.setElem(matrix.matrix[i][j], p + i + 1, q + j + 1);
-        }
+    for (let i = 0; i < Math.min(this.n - p, matrix.n); i++) {
+      for (let j = 0; j < Math.min(this.m - q, matrix.m); j++) {
+        this.setElem(matrix.matrix[i][j], p + i + 1, q + j + 1);
       }
-    } else {
-      throw Error("Matrix Is not fitting");
     }
-    // } else {
-    //   throw Error("Not valid indexes");
-    // }
   }
 }
 
