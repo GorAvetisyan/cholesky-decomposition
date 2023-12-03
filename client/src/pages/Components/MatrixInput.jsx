@@ -4,7 +4,7 @@ import { isNatural } from "../../../../helpers.js";
 import styles from "../../styles/MatrixInput.module.css";
 
 const MatrixInput = ({ title, matrix, setMatrix }) => {
-  const [size, setSize] = useState({ n: matrix.n, m: matrix.m });
+  const [size, setSize] = useState({ n: matrix?.n, m: matrix?.m });
 
   const [focusedCell, setFocusedCell] = useState({
     i: null,
@@ -62,7 +62,7 @@ const MatrixInput = ({ title, matrix, setMatrix }) => {
         </div>
       </div>
       <div className={styles.matrix}>
-        {matrix.matrix.map((row, i) => {
+        {matrix?.matrix.map((row, i) => {
           return (
             <div key={i} className={styles.row}>
               {row.map((item, j) => {
