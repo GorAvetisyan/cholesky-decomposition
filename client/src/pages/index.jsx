@@ -18,6 +18,11 @@ export default function Home() {
 
   const [B, setB] = useState(new Matrix(3, 1, [[76], [295], [1259]]));
   const [solution, setSolution] = useState(new Matrix(3, 1));
+
+  function solveByCD(matrix, vector) {
+    setSolution(matrix.solveByCD(vector));
+  }
+
   return (
     <>
       <Head>
@@ -52,6 +57,7 @@ export default function Home() {
         <BlockMath math={"="} /> {/* KaTeX symbol for equals */}
         <BlockMath math={solution.getKatex()} />
       </div>
+      <button onClick={e => solveByCD(A, B)}>Solve</button>
     </>
   );
 }
