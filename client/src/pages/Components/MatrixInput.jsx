@@ -10,6 +10,11 @@ const MatrixInput = ({ title }) => {
   });
 
   const [matrix, setMatrix] = useState(new Matrix(3, 3));
+  const [focusedCell, setFocusedCell] = useState({
+    i: null,
+    j: null,
+    value: 0,
+  });
 
   useEffect(() => {
     const newMatrix = new Matrix(size.n, size.m);
@@ -26,10 +31,15 @@ const MatrixInput = ({ title }) => {
     }
   };
 
-  const setMatrixElement = (value, i, j) => {
-    matrix.setElem(value, i + 1, j + 1);
-    console.log(matrix);
+  const setMatrixElement = () => {
+    const { value, i, j } = focusedCell;
+    matrix.setElem(+value || 0, i + 1, j + 1);
     setMatrix(new Matrix(size.n, size.m, matrix.matrix));
+  };
+
+  const handleCellChange = (value, i, j) => {
+    console.log(value, i, j);
+    setFocusedCell({ value, i, j });
   };
 
   return (
@@ -58,14 +68,19 @@ const MatrixInput = ({ title }) => {
       <div className={styles.matrix}>
         {matrix.matrix.map((row, i) => {
           return (
-            <div className={styles.row}>
+            <div key={i} className={styles.row}>
               {row.map((item, j) => {
                 return (
-                  <div className={styles.cell}>
+                  <div key={j} className={styles.cell}>
                     <input
                       type="number"
-                      value={matrix.matrix[i][j]}
-                      onChange={e => setMatrixElement(+e.target.value, i, j)}
+                      value={
+                        focusedCell.i === i && focusedCell.j === j
+                          ? focusedCell.value
+                          : item
+                      }
+                      onChange={e => handleCellChange(e.target.value, i, j)}
+                      onBlur={e => setMatrixElement(i, j)}
                     />
                   </div>
                 );
