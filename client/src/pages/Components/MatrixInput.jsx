@@ -3,13 +3,9 @@ import { Matrix } from "../../../../Matrix.js";
 import { isNatural } from "../../../../helpers.js";
 import styles from "../../styles/MatrixInput.module.css";
 
-const MatrixInput = ({ title }) => {
-  const [size, setSize] = useState({
-    n: 3,
-    m: 3,
-  });
+const MatrixInput = ({ title, matrix, setMatrix }) => {
+  const [size, setSize] = useState({ n: matrix.n, m: matrix.m });
 
-  const [matrix, setMatrix] = useState(new Matrix(3, 3));
   const [focusedCell, setFocusedCell] = useState({
     i: null,
     j: null,
