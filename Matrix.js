@@ -289,7 +289,7 @@ class Matrix {
     if (this.isUpperTriangular()) {
       if (B instanceof Vector || true) {
         // true because on matrix.multiply(vector) result is instance of Matrix class not Vector !!! must resolve this
-        
+
         const X = new Vector(this.n);
 
         // x[n - 1] = b[n - 1] / a[n - 1][n - 1];
@@ -374,6 +374,14 @@ class Matrix {
         this.setElem(matrix.matrix[i][j], p + i + 1, q + j + 1);
       }
     }
+  }
+
+  getKatex() {
+    const katex = `\\begin{bmatrix}${this.matrix
+      .map(row => row.join(" & "))
+      .join(" \\\\ ")}\\end{bmatrix}`;
+
+    return katex;
   }
 }
 
