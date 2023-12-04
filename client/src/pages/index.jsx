@@ -19,15 +19,21 @@ export default function Home() {
   const [B, setB] = useState(new Matrix(3, 1, [[76], [295], [1259]]));
   const [U, setU] = useState(new Matrix(3, 3));
   const [solution, setSolution] = useState(new Matrix(3, 1));
+  const [checking, setChecking] = useState(new Matrix(3, 1));
 
   function setRandom() {
     setA(randomPDSYM(10));
     setB(randomMatrix(10, 1));
+    setSolution(new Matrix(10, 1));
+    setU(new Matrix(10, 1));
+    setChecking(new Matrix(10, 1));
   }
 
   function solveByCD(matrix, vector) {
+    console.log(matrix, vector);
     setU(matrix.findU());
     setSolution(matrix.solveByCD(vector));
+    setChecking(A.multiply(matrix.solveByCD(vector)).add(B.scale(-1)));
   }
 
   const generateColumnVector = n => {
@@ -93,10 +99,26 @@ export default function Home() {
 
       <button onClick={e => solveByCD(A, B)}>Solve</button>
 
+      <h1>Solution vector</h1>
+
       <div className={styles.matrix_equation}>
         <BlockMath math={columnVector} />
         <BlockMath math={"="} /> {/* KaTeX symbol for equals */}
         <BlockMath math={solution.getKatex()} />
+      </div>
+
+      <h1>Checking if</h1>
+
+      <div className={styles.steps}>
+        <BlockMath>
+          {`\\begin{align*}
+              Ax - B &\\approx 0 \\\\
+            \\end{align*}`}
+        </BlockMath>
+      </div>
+
+      <div className={styles.matrix_equation}>
+        <BlockMath math={checking.getKatex()} />
       </div>
     </>
   );
