@@ -1,4 +1,4 @@
-const { isNatural, isNumber } = require("./helpers");
+const { isNatural, isNumber, getRandomArbitrary } = require("./helpers");
 
 class Matrix {
   constructor(n, m, array) {
@@ -450,4 +450,27 @@ class PermutationMatrix extends Matrix {
   }
 }
 
-module.exports = { Matrix, Vector, Row, PermutationMatrix };
+const randomMatrix = (n, m) => {
+  const A = new Matrix(n, m);
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      A.matrix[i][j] = getRandomArbitrary(-100, 100);
+    }
+  }
+  return A;
+};
+
+// Random Positive Definite and Symmetric Matrix
+const randomPDSYM = n => {
+  const X = randomMatrix(n, n);
+  return X.transpose().multiply(X);
+};
+
+module.exports = {
+  Matrix,
+  Vector,
+  Row,
+  PermutationMatrix,
+  randomPDSYM,
+  randomMatrix,
+};

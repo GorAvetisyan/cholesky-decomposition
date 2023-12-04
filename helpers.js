@@ -8,4 +8,8 @@ const isNumber = n => {
   return typeof n === "number" && !isNaN(n);
 };
 
-module.exports = { isNatural, isNumber };
+const getRandomArbitrary = (min, max) => {
+  return Math.random() * (max - min) + min;
+};
+
+module.exports = { isNatural, isNumber, getRandomArbitrary };

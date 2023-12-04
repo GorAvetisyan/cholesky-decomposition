@@ -3,7 +3,7 @@ import styles from "./../styles/Home.module.css";
 import Head from "next/head";
 import Welcome from "./Components/Welcome";
 import { useEffect, useState } from "react";
-import { Matrix } from "../../../Matrix";
+import { Matrix, randomMatrix, randomPDSYM } from "../../../Matrix";
 import "katex/dist/katex.min.css"; // Import the Katex styles
 import { BlockMath } from "react-katex";
 
@@ -17,9 +17,16 @@ export default function Home() {
   );
 
   const [B, setB] = useState(new Matrix(3, 1, [[76], [295], [1259]]));
+  const [U, setU] = useState(new Matrix(3, 3));
   const [solution, setSolution] = useState(new Matrix(3, 1));
 
+  function setRandom() {
+    setA(randomPDSYM(10));
+    setB(randomMatrix(10, 1));
+  }
+
   function solveByCD(matrix, vector) {
+    setU(matrix.findU());
     setSolution(matrix.solveByCD(vector));
   }
 
@@ -35,7 +42,7 @@ export default function Home() {
     return `\\begin{bmatrix} ${variables} \\end{bmatrix}`;
   };
 
-  const columnVector = generateColumnVector(3);
+  const columnVector = generateColumnVector(A.n);
 
   return (
     <>
@@ -51,6 +58,7 @@ export default function Home() {
         ></link>
       </Head>
       <Welcome />
+      <button onClick={setRandom}>Set Random</button>
       <div className={styles.input_matrices}>
         <MatrixInput title={"A"} matrix={A} setMatrix={setA} />
         <MatrixInput title={"B"} matrix={B} setMatrix={setB} />
@@ -80,7 +88,7 @@ export default function Home() {
       <div className={styles.matrix_equation}>
         <h3>U</h3>
         <BlockMath math={"="} /> {/* KaTeX symbol for equals */}
-        <BlockMath math={A.findU().getKatex()} />
+        <BlockMath math={U.getKatex()} />
       </div>
 
       <button onClick={e => solveByCD(A, B)}>Solve</button>
