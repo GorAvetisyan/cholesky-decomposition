@@ -4,33 +4,26 @@ import { isNatural } from "../../../../helpers.js";
 import styles from "../../styles/MatrixInput.module.css";
 
 const MatrixInput = ({ title, matrix, setMatrix }) => {
-  const [size, setSize] = useState({ n: matrix?.n, m: matrix?.m });
-
   const [focusedCell, setFocusedCell] = useState({
     i: null,
     j: null,
     value: 0,
   });
 
-  useEffect(() => {
-    const newMatrix = new Matrix(size.n, size.m);
-    newMatrix.setMatrix(matrix);
-    setMatrix(newMatrix);
-  }, [size]);
-
   const handleSizeChange = e => {
     if (isNatural(+e.target.value)) {
-      setSize({
-        ...size,
-        [e.target.name]: +e.target.value,
-      });
+      const n = e.target.name === "n" ? +e.target.value : matrix?.n;
+      const m = e.target.name === "m" ? +e.target.value : matrix?.m;
+      const newMatrix = new Matrix(n, m);
+      newMatrix.setMatrix(matrix);
+      setMatrix(newMatrix);
     }
   };
 
   const setMatrixElement = () => {
     const { value, i, j } = focusedCell;
-    matrix.setElem(+value || 0, i + 1, j + 1);
-    setMatrix(new Matrix(size.n, size.m, matrix.matrix));
+    matrix?.setElem(+value || 0, i + 1, j + 1);
+    setMatrix(new Matrix(matrix?.n, matrix?.m, matrix?.matrix));
   };
 
   const handleCellChange = (value, i, j) => {
@@ -48,7 +41,7 @@ const MatrixInput = ({ title, matrix, setMatrix }) => {
             type="number"
             name="n"
             onChange={handleSizeChange}
-            value={size.n}
+            value={matrix?.n}
           />
         </div>
         <div>
@@ -57,12 +50,12 @@ const MatrixInput = ({ title, matrix, setMatrix }) => {
             type="number"
             name="m"
             onChange={handleSizeChange}
-            value={size.m}
+            value={matrix?.m}
           />
         </div>
       </div>
       <div className={styles.matrix}>
-        {matrix?.matrix.map((row, i) => {
+        {matrix?.matrix?.map((row, i) => {
           return (
             <div key={i} className={styles.row}>
               {row.map((item, j) => {
