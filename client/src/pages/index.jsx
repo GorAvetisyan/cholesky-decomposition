@@ -23,6 +23,20 @@ export default function Home() {
     setSolution(matrix.solveByCD(vector));
   }
 
+  const generateColumnVector = n => {
+    if (n <= 0) {
+      return ""; // Return an empty string for non-positive values of n
+    }
+
+    const variables = Array.from({ length: n }, (_, i) => `x${i + 1}`).join(
+      " \\\\ ",
+    );
+
+    return `\\begin{bmatrix} ${variables} \\end{bmatrix}`;
+  };
+
+  const columnVector = generateColumnVector(3);
+
   return (
     <>
       <Head>
@@ -41,23 +55,41 @@ export default function Home() {
         <MatrixInput title={"A"} matrix={A} setMatrix={setA} />
         <MatrixInput title={"B"} matrix={B} setMatrix={setB} />
       </div>
+      <h1>System of linear equations</h1>
       <div className={styles.matrix_equation}>
         <BlockMath math={A.getKatex()} />
         <BlockMath math={"\\cdot"} /> {/* KaTeX symbol for multiplication */}
-        <BlockMath
-          math={"\\begin{bmatrix} x1 \\\\ x2 \\\\ x3 \\end{bmatrix}"}
-        />
+        <BlockMath math={columnVector} />
         <BlockMath math={"="} /> {/* KaTeX symbol for equals */}
         <BlockMath math={B.getKatex()} />
       </div>
+
+      <h1>Idea is to solve 2 less complex systems</h1>
+      <div className={styles.steps}>
+        <BlockMath>
+          {`\\begin{align*}
+            Ax &= b \\\\
+            (U^T U) x &= b \\\\
+            U^T y &= b \\\\
+            Ux &= y
+          \\end{align*}`}
+        </BlockMath>
+      </div>
+
+      <h1>Finding U matrix</h1>
       <div className={styles.matrix_equation}>
-        <BlockMath
-          math={"\\begin{bmatrix} x1 \\\\ x2 \\\\ x3 \\end{bmatrix}"}
-        />
+        <h3>U</h3>
+        <BlockMath math={"="} /> {/* KaTeX symbol for equals */}
+        <BlockMath math={A.findU().getKatex()} />
+      </div>
+
+      <button onClick={e => solveByCD(A, B)}>Solve</button>
+
+      <div className={styles.matrix_equation}>
+        <BlockMath math={columnVector} />
         <BlockMath math={"="} /> {/* KaTeX symbol for equals */}
         <BlockMath math={solution.getKatex()} />
       </div>
-      <button onClick={e => solveByCD(A, B)}>Solve</button>
     </>
   );
 }
