@@ -49,7 +49,7 @@ export default function Home() {
 
   function changeRandSize(e) {
     const size = +e.target.value;
-    if (isNatural(size)) {
+    if (isNatural(size) && size <= 30) {
       setRandSize(size);
     }
   }
