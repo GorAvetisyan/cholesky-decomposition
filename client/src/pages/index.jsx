@@ -23,6 +23,15 @@ export default function Home() {
   const [checking, setChecking] = useState(new Matrix(3, 1));
   const [randSize, setRandSize] = useState(10);
 
+  const [uPrec, setUPrec] = useState(2);
+
+  function changeUprec(n) {
+    console.log("HELLO");
+    if (isNatural(n)) {
+      setUPrec(n);
+    }
+  }
+
   function setRandom() {
     setA(randomPDSYM(randSize));
     setB(randomMatrix(randSize, 1));
@@ -100,10 +109,16 @@ export default function Home() {
       </div>
 
       <h1>Finding U matrix</h1>
+      {/* <label htmlFor="">Set U precision</label> */}
+      <input
+        type="number"
+        value={uPrec}
+        onChange={e => changeUprec(+e.target.value)}
+      />
       <div className={styles.matrix_equation}>
         <h3>U</h3>
         <BlockMath math={"="} /> {/* KaTeX symbol for equals */}
-        <BlockMath math={U.getKatex()} />
+        <BlockMath math={U.getKatex(uPrec)} />
       </div>
 
       <button onClick={e => solveByCD(A, B)}>Solve</button>

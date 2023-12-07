@@ -376,9 +376,9 @@ class Matrix {
     }
   }
 
-  getKatex() {
+  getKatex(n) {
     const katex = `\\begin{bmatrix}${this.matrix
-      .map(row => row.join(" & "))
+      .map(row => row.map(item => (n ? item.toFixed(n) : item)).join(" & "))
       .join(" \\\\ ")}\\end{bmatrix}`;
 
     return katex;
