@@ -58,7 +58,7 @@ export default function Home() {
       return ""; // Return an empty string for non-positive values of n
     }
 
-    const variables = Array.from({ length: n }, (_, i) => `x${i + 1}`).join(
+    const variables = Array.from({ length: n }, (_, i) => `x_{${i + 1}}`).join(
       " \\\\ ",
     );
 
