@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Matrix, randomMatrix, randomPDSYM } from "../../../Matrix";
 import "katex/dist/katex.min.css"; // Import the Katex styles
 import { BlockMath } from "react-katex";
+import { isNatural } from "../../../helpers";
 
 export default function Home() {
   const [A, setA] = useState(
@@ -20,13 +21,14 @@ export default function Home() {
   const [U, setU] = useState(new Matrix(3, 3));
   const [solution, setSolution] = useState(new Matrix(3, 1));
   const [checking, setChecking] = useState(new Matrix(3, 1));
+  const [randSize, setRandSize] = useState(10);
 
   function setRandom() {
-    setA(randomPDSYM(10));
-    setB(randomMatrix(10, 1));
-    setSolution(new Matrix(10, 1));
-    setU(new Matrix(10, 1));
-    setChecking(new Matrix(10, 1));
+    setA(randomPDSYM(randSize));
+    setB(randomMatrix(randSize, 1));
+    setSolution(new Matrix(randSize, 1));
+    setU(new Matrix(randSize, 1));
+    setChecking(new Matrix(randSize, 1));
   }
 
   function solveByCD(matrix, vector) {
@@ -36,6 +38,12 @@ export default function Home() {
     setChecking(A.multiply(matrix.solveByCD(vector)).add(B.scale(-1)));
   }
 
+  function changeRandSize(e) {
+    const size = +e.target.value;
+    if (isNatural(size)) {
+      setRandSize(size);
+    }
+  }
   const generateColumnVector = n => {
     if (n <= 0) {
       return ""; // Return an empty string for non-positive values of n
@@ -65,6 +73,7 @@ export default function Home() {
       </Head>
       <Welcome />
       <button onClick={setRandom}>Set Random</button>
+      <input type="number" onChange={changeRandSize} value={randSize} />
       <div className={styles.input_matrices}>
         <MatrixInput title={"A"} matrix={A} setMatrix={setA} />
         <MatrixInput title={"B"} matrix={B} setMatrix={setB} />
