@@ -454,7 +454,7 @@ const randomMatrix = (n, m) => {
   const A = new Matrix(n, m);
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < m; j++) {
-      A.matrix[i][j] = getRandomArbitrary(-100, 100);
+      A.matrix[i][j] = Math.round(getRandomArbitrary(-8, 8));
     }
   }
   return A;
